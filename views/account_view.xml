@@ -2,8 +2,8 @@
 <openerp>
     <data>
 
-        <record model="ir.ui.view" id="invoice_form_gface_efactura">
-            <field name="name">account.invoice.form.gface_efactura</field>
+        <record model="ir.ui.view" id="invoice_form_gface_cofidi">
+            <field name="name">account.invoice.form.gface_cofidi</field>
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
@@ -18,8 +18,8 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="journal_form_gface_efactura">
-            <field name="name">account.journal.form.gface_efactura</field>
+        <record model="ir.ui.view" id="journal_form_gface_cofidi">
+            <field name="name">account.journal.form.gface_cofidi</field>
             <field name="model">account.journal</field>
             <field name="inherit_id" ref="account.view_account_journal_form"/>
             <field name="arch" type="xml">

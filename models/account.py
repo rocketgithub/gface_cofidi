@@ -196,7 +196,8 @@ class AccountInvoice(models.Model):
                     Texto.text = factura.comment
 
                 xmls = etree.tostring(FactDocGT, xml_declaration=True, encoding="UTF-8", pretty_print=True)
-                wsdl = 'https://gface.efactura.com.gt/mx.com.fact.wsfront/FactWSFront.asmx?wsdl'
+                logging.warn(str(resultado))
+                wsdl = 'http://portal.cofidiguatemala.com/webservicefront/factwsfront.asmx?WSDL'
                 client = zeep.Client(wsdl=wsdl)
 
                 resultado = client.service.RequestTransaction(factura.journal_id.requestor_gface, "CONVERT_NATIVE_XML", "GT", factura.journal_id.nit_gface, factura.journal_id.requestor_gface, factura.journal_id.usuario_gface, xmls, "XML,PDF", "")
@@ -225,12 +226,11 @@ class AccountJournal(models.Model):
     nit_gface = fields.Char('NIT GFACE', copy=False)
     serie_gface = fields.Char('Serie GFACE', copy=False)
     numero_autorizacion_gface = fields.Char('Numero Autorización GFACE', copy=False)
-    fecha_resolucion_gface = fields.Char('Fecha Resolución GFACE', copy=False)
+    fecha_resolucion_gface = fields.Date('Fecha Resolución GFACE', copy=False)
     rango_inicial_gface = fields.Integer('Rango Inicial GFACE', copy=False)
     rango_final_gface = fields.Integer('Rango Final GFACE', copy=False)
     numero_establecimiento_gface = fields.Char('Numero Establecimiento GFACE', copy=False)
     dispositivo_gface = fields.Char('Dispositivo GFACE', copy=False)
-    tipo_documento_gface = fields.Selection([('FACE63', 'FACE63'),('NCE64', 'NCE64')], 'Tipo de Documento GFACE', copy=False)
-
+    tipo_documento_gface = fields.Selection([('FACE63', 'FACE63'), ('NCE64', 'NCE64')], 'Tipo de Documento GFACE', copy=False)
 
 # http://soporte.solucionesprisma.com:5010/web/content/pos.order/6/pdf_gface

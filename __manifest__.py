@@ -1,12 +1,12 @@
 # -*- encoding: utf-8 -*-
 
 {
-    'name': 'GEFACE efactura',
+    'name': 'GEFACE cofidi',
     'version': '1.0',
     'category': 'Custom',
-    'description': """ Integración con factura electrónica de efactura """,
+    'description': """ Integración con factura electrónica de Cofidi """,
     'author': 'Rodrigo Fernandez',
-    'website': 'http://solucionesprisma.com/',
+    'website': 'http://aquih.com/',
     'depends': ['account'],
     'data': [
         'views/account_view.xml',
