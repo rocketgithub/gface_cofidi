@@ -196,7 +196,7 @@ class AccountInvoice(models.Model):
                     Texto.text = factura.comment
 
                 xmls = etree.tostring(FactDocGT, xml_declaration=True, encoding="UTF-8", pretty_print=True)
-                logging.warn(str(resultado))
+                logging.warn(str(xmls))
                 wsdl = 'http://portal.cofidiguatemala.com/webservicefront/factwsfront.asmx?WSDL'
                 client = zeep.Client(wsdl=wsdl)
 
