@@ -76,21 +76,21 @@ class AccountInvoice(models.Model):
                 Comprador = etree.SubElement(FactDocGT, "Comprador")
                 NitC = etree.SubElement(Comprador, "Nit")
                 NitC.text = factura.partner_id.vat.replace('-','')
-                if factura.partner_id.vat == 'CF':
+                if factura.partner_id.vat == 'CF' or factura.partner_id.vat == 'EXPORT':
                     NombreComercial = etree.SubElement(Comprador, "NombreComercial")
                     NombreComercial.text = factura.partner_id.name
 
                     DireccionComercial = etree.SubElement(Comprador, "DireccionComercial")
                     Direccion1 = etree.SubElement(DireccionComercial, "Direccion1")
-                    Direccion1.text = "Ciudad"
+                    Direccion1.text = factura.partner_id.street or ""
                     Direccion2 = etree.SubElement(DireccionComercial, "Direccion2")
-                    Direccion2.text = "Ciudad"
+                    Direccion2.text = factura.partner_id.street2 or ""
                     Municipio = etree.SubElement(DireccionComercial, "Municipio")
-                    Municipio.text = "Guatemala"
+                    Municipio.text = factura.partner_id.city or ""
                     Departamento = etree.SubElement(DireccionComercial, "Departamento")
-                    Departamento.text = "Guatemala"
+                    Departamento.text = factura.partner_id.state or ""
                     CodigoDePais = etree.SubElement(DireccionComercial, "CodigoDePais")
-                    CodigoDePais.text = "GT"
+                    CodigoDePais.text = factura.partner_id.country_id and factura.partner_id.country_id.code or ""
 
                 IdiomaC = etree.SubElement(Comprador, "Idioma")
                 IdiomaC.text = "es"
@@ -232,5 +232,3 @@ class AccountJournal(models.Model):
     numero_establecimiento_gface = fields.Char('Numero Establecimiento GFACE', copy=False)
     dispositivo_gface = fields.Char('Dispositivo GFACE', copy=False)
     tipo_documento_gface = fields.Selection([('FACE63', 'FACE63'), ('FACE66', 'FACE66'), ('NCE64', 'NCE64'), ('NDE65', 'NDE65'), ('FACE72', 'FACE72'), ('FACE74', 'FACE74')], 'Tipo de Documento GFACE', copy=False)
-
-# http://soporte.solucionesprisma.com:5010/web/content/pos.order/6/pdf_gface
