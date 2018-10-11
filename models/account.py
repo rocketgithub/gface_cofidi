@@ -58,6 +58,13 @@ class AccountInvoice(models.Model):
                 CodigoDeMoneda.text = "GTQ"
                 TipoDeCambio = etree.SubElement(Encabezado, "TipoDeCambio")
                 TipoDeCambio.text = "1"
+                if factura.currency_id.id != factura.company_id.currency_id.id:
+                    total = 0
+                    for l in factura.move_id.line_ids:
+                        if l.account_id.id == factura.account_id.id:
+                            total += l.debit - l.credit
+                    tipo_cambio = abs(total / factura.amount_total)
+                    TipoDeCambio.text = str(tipo_cambio)
                 InformacionDeRegimenIsr = etree.SubElement(Encabezado, "InformacionDeRegimenIsr")
                 InformacionDeRegimenIsr.text = "PAGO_CAJAS"
                 ReferenciaInterna = etree.SubElement(Encabezado, "ReferenciaInterna")
@@ -82,15 +89,15 @@ class AccountInvoice(models.Model):
 
                     DireccionComercial = etree.SubElement(Comprador, "DireccionComercial")
                     Direccion1 = etree.SubElement(DireccionComercial, "Direccion1")
-                    Direccion1.text = factura.partner_id.street or ""
+                    Direccion1.text = factura.partner_id.street or "."
                     Direccion2 = etree.SubElement(DireccionComercial, "Direccion2")
-                    Direccion2.text = factura.partner_id.street2 or ""
+                    Direccion2.text = factura.partner_id.street2 or "."
                     Municipio = etree.SubElement(DireccionComercial, "Municipio")
-                    Municipio.text = factura.partner_id.city or ""
+                    Municipio.text = factura.partner_id.city or "."
                     Departamento = etree.SubElement(DireccionComercial, "Departamento")
-                    Departamento.text = factura.partner_id.state or ""
+                    Departamento.text = factura.partner_id.state_id and factura.partner_id.state_id.name or "."
                     CodigoDePais = etree.SubElement(DireccionComercial, "CodigoDePais")
-                    CodigoDePais.text = factura.partner_id.country_id and factura.partner_id.country_id.code or ""
+                    CodigoDePais.text = factura.partner_id.country_id and factura.partner_id.country_id.code or "GT"
 
                 IdiomaC = etree.SubElement(Comprador, "Idioma")
                 IdiomaC.text = "es"
